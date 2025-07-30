@@ -37,10 +37,12 @@ set(TOOL_SOURCES
 
 # 添加静态库和共享库
 add_library(lmdb_static STATIC ${LIB_SOURCES})
-add_library(lmdb_shared SHARED ${LIB_SOURCES})
+add_library(lmdb SHARED ${LIB_SOURCES})  # 注意：目标名直接为 lmdb
 
 # 设置共享库的编译标志（-fPIC）
-set_target_properties(lmdb_shared PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
+set_target_properties(lmdb PROPERTIES
+        POSITION_INDEPENDENT_CODE TRUE
+)
 
 # 添加工具和测试程序
 foreach(src IN LISTS TEST_SOURCES)
@@ -54,7 +56,7 @@ foreach(src IN LISTS TOOL_SOURCES)
 endforeach()
 
 # 安装规则
-install(TARGETS lmdb_static lmdb_shared
+install(TARGETS lmdb_static lmdb
         ARCHIVE DESTINATION lib
         LIBRARY DESTINATION lib)
 
